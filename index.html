@@ -1116,6 +1116,28 @@ document.getElementById('backToFormBtn').addEventListener('click', ()=>{
   resizeCanvas();
 });
 
+  async function consultarPanel(password, anio, mes){
+  if(!POWER_AUTOMATE_AUTH_URL) return { ok:false };
+
+  const payload = {
+    password,
+    anio: Number(anio),
+    mes: Number(mes)
+  };
+
+  const resp = await fetch(POWER_AUTOMATE_AUTH_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if(!resp.ok) return { ok:false };
+
+  return await resp.json();
+}
+
 /* ---- Paso 1: validar contraseña (sin cargar folios todavía) ----
    Se manda igual password+anio+mes (con el período por default = hoy) solo
    para autenticar contra el Flow; los folios recién se piden en el paso 2,
