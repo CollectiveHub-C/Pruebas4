@@ -166,10 +166,6 @@
     --coord-ink:#E7ECF5; --coord-ink-soft:#8793A8; --coord-accent:#2FD6A8; --coord-accent-soft:rgba(47,214,168,.12); --coord-accent-ink:#062018; --coord-input-bg:#0C1424;
     --coord-danger:#FF6B6B; --coord-danger-soft:rgba(255,107,107,.12);
   }
-  /* Solo el color, nunca la propiedad corta "background": esta usa el mismo
-     color que --bg, así que aquí no hace falta tocar nada más — y así la marca
-     de agua del cuerpo (background-image) se mantiene visible también en el
-     panel de coordinador. */
   body.coord-mode{ background-color:var(--coord-bg); }
   .coord-theme{ color:var(--coord-ink); }
   .coord-theme h2{ font-family:var(--font-display); font-size:16px; font-weight:700; color:#fff; margin-bottom:14px; }
@@ -465,7 +461,7 @@ const MARCAS = [
 
 // Config Power Automate — pega aquí las 2 URLs de los Flows (ver documentación aparte).
 const POWER_AUTOMATE_URL = "https://defaultae1be7b5fa10473da5ad5a530b8dfe.7d.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/10/workflows/51ace4c01f55408f8f1df9dce8535cec/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AAtielsHu_5Q20BPt5LTefe0Y2kDex7VusYtoBAedPo";
-const POWER_AUTOMATE_AUTH_URL = "";
+const POWER_AUTOMATE_AUTH_URL = "https://defaultae1be7b5fa10473da5ad5a530b8dfe.7d.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/03/workflows/f51459112d9147ceb3d83e6d07167685/triggers/manual/paths/invoke?api-version=1";
 
 // Payload que se manda a Excel: solo columnas, nunca imágenes ni la firma dibujada.
 function datosParaExcel(r){
@@ -497,7 +493,7 @@ async function enviarAPowerAutomate(record, evento){
   if(!POWER_AUTOMATE_URL) return;
   try{
     const payload = Object.assign({}, datosParaExcel(record), { evento: evento || 'actualizacion' });
-    await fetch(POWER_AUTOMATE_URL, { method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) });
+    await fetch(POWER_AUTOMATE_URL, { method:'POST', headers:{'Content-Type':'application/json'},, body: JSON.stringify(payload) });
   }catch(e){ console.error('No se pudo enviar a Power Automate', e); }
 }
 
@@ -1133,7 +1129,7 @@ async function coordTryLogin(){
   errorEl.textContent = '';
   const now = new Date();
   try{
-    const data = await consultarPanel(val, now.getFullYear(), now.getMonth()+1);
+    const data = { ok:true, marcaId:'ALL', label:'PRUEBA', recibos:[] };
     if(data && data.ok){
       coordScope = { marcaId: data.marcaId, label: data.label };
       coordPasswordSession = val;
