@@ -932,13 +932,22 @@ document.getElementById('generarBtn').addEventListener('click', async ()=>{
   };
 
   // Guardar en la bandeja de salida antes de mostrar nada.
-  try{
-    await outboxGuardar({ uuid: currentRecord.uuid, estado:'pendiente', datos: datosParaExcel(currentRecord) });
-  }catch(e){ console.error('No se pudo guardar en la bandeja de salida', e); }
+try{
+  await outboxGuardar({
+    uuid: currentRecord.uuid,
+    estado:'pendiente',
+    datos: datosParaExcel(currentRecord)
+  });
 
-  btn.disabled = false; btn.textContent = 'Generar folio';
-  showConfirmView();
-  sincronizarPendientes();
+  await sincronizarPendientes();
+
+}catch(e){
+  console.error('No se pudo guardar en la bandeja de salida', e);
+}
+
+btn.disabled = false;
+btn.textContent = 'Generar folio';
+showConfirmView();
 });
 
 function showConfirmView(){
