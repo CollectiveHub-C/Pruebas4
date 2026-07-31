@@ -1160,7 +1160,11 @@ async function coordTryLogin(){
   errorEl.textContent = '';
   const now = new Date();
   try{
-    const data = { ok:true, marcaId:'ALL', label:'PRUEBA', recibos:[] };
+    const data = await consultarPanel(
+  val,
+  now.getFullYear(),
+  now.getMonth() + 1
+);
     if(data && data.ok){
       coordScope = { marcaId: data.marcaId, label: data.label };
       coordPasswordSession = val;
