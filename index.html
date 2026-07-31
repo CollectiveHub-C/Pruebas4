@@ -493,7 +493,7 @@ async function enviarAPowerAutomate(record, evento){
   if(!POWER_AUTOMATE_URL) return;
   try{
     const payload = Object.assign({}, datosParaExcel(record), { evento: evento || 'actualizacion' });
-    await fetch(POWER_AUTOMATE_URL, { method:'POST', headers:{'Content-Type':'application/json'},, body: JSON.stringify(payload) });
+    await fetch(POWER_AUTOMATE_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
   }catch(e){ console.error('No se pudo enviar a Power Automate', e); }
 }
 
