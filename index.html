@@ -572,7 +572,7 @@ async function sincronizarPendientes(){
       let ok = false;
       try{
         const payload = Object.assign({}, item.datos, { evento:'creado' });
-        const resp = await fetch(POWER_AUTOMATE_URL, { method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) });
+        const resp = await fetch(POWER_AUTOMATE_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
         if(resp.ok) ok = true;
         else if(resp.status === 429) await new Promise(r=>setTimeout(r,120000));
         else if(resp.status >= 500) await new Promise(r=>setTimeout(r,30000));
