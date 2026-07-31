@@ -1012,7 +1012,7 @@ document.getElementById('waBtn').addEventListener('click', async ()=>{
       document.getElementById('waStatus').textContent = '✓ Imagen descargada — adjúntala en WhatsApp';
     }
     currentRecord.entregaWhatsapp = true;
-    await enviarAPowerAutomate(currentRecord, 'whatsapp_enviado');
+    // await enviarAPowerAutomate(currentRecord, 'whatsapp_enviado');
     document.getElementById('waStatus').classList.add('done');
   }catch(err){
     console.error(err);
@@ -1053,7 +1053,7 @@ document.getElementById('printConfirmBtn').addEventListener('click', async ()=>{
   try{
     await imprimirTicket(currentRecord);
     currentRecord.entregaImpreso = true;
-    await enviarAPowerAutomate(currentRecord, 'impreso');
+    // await enviarAPowerAutomate(currentRecord, 'impreso');
     document.getElementById('printStatus').textContent = '✓ Marcado como impreso';
     document.getElementById('printStatus').classList.add('done');
   }catch(err){
@@ -1076,7 +1076,7 @@ document.getElementById('pdfBtn').addEventListener('click', async ()=>{
     doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, pageWidthMm, pageHeightMm);
     doc.save(`ticket-${r.folio}.pdf`);
     currentRecord.entregaPDF = true;
-    await enviarAPowerAutomate(currentRecord, 'pdf_descargado');
+    // await enviarAPowerAutomate(currentRecord, 'pdf_descargado');
     document.getElementById('printStatus').textContent = '✓ PDF descargado';
     document.getElementById('printStatus').classList.add('done');
   }catch(err){
